@@ -13,7 +13,7 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const router = Router();
 
 router.get('/',
-    // validarJWT, 
+    validarJWT, 
     getMedicos);
 
 router.post('/',
@@ -27,16 +27,15 @@ router.post('/',
 
 router.put('/:id',
     [
-        // validarJWT,
-        // check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-        // check('email', 'El email es obligatorio').isEmail(),
-        // check('password', 'El rol es obligatorio').not().isEmpty(),
-        // validarCampos
+        validarJWT,
+        check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+        check('hospital', 'El hospital id debe ser valido').isMongoId(),
+        validarCampos
     ],
     actualizarMedico);
 
 router.delete('/:id',
-    // validarJWT,
+    validarJWT,
     eliminarMedico);
 
 

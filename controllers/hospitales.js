@@ -49,41 +49,30 @@ const actualizarHospital = async (req, res = response) => {
 
     //TODO: Validar token y comprobar si es el usuario correcto
 
-    // const uid = req.params.id;
+    const hospitalId = req.params.id;
+    const uid = req.uid;
 
     try {
 
-        // const usuarioDB = await Usuario.findById(uid);
+        const hospitalDB = await Hospital.findById(hospitalId);
 
-        // if (!usuarioDB) {
-        //     return res.status(404).json({
-        //         ok: false,
-        //         msg: 'No existe ningun usuario con ese ID'
-        //     });
-        // }
+        if (!hospitalDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe ningun hospital con ese ID'
+            });
+        }
 
-        // //Actualizar usuario
-        // const { password, google, email, ...campos } = req.body;
+        const cambiosHospital = {
+            ...req.body,
+            usuario: uid
+        }
 
-        // if (usuarioDB.email !== email) {
-
-        //     const existeEmail = await Usuario.findOne({ email });
-
-        //     if (existeEmail) {
-        //         return res.status(400).json({
-        //             ok: false,
-        //             msg: 'Ya existe un usuario con ese email'
-        //         });
-
-        //     }
-
-        // }
-        // campos.email = email;
-        // const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
+        const hospitalActualizado = await Hospital.findByIdAndUpdate(hospitalId, cambiosHospital, { new: true });
 
         res.json({
             ok: true,
-            // usuarioActualizado
+            hospital : hospitalActualizado
         })
 
     }
@@ -91,30 +80,31 @@ const actualizarHospital = async (req, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error inesperado, revisar logs'
+            msg: 'Contacte al administrador'
         })
     }
 }
 
 const eliminarHospital = async (req, res = response) => {
+
     try {
 
-        // const uid = req.params.id;
+         const hospitalId = req.params.id;
 
-        // const usuarioDB = await Usuario.findById(uid);
+        const hospitalDB = await Hospital.findById(hospitalId);
 
-        // if (!usuarioDB) {
-        //     return res.status(404).json({
-        //         ok: false,
-        //         msg: 'No existe ningun usuario con ese ID'
-        //     });
-        // }
+        if (!hospitalDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe ningun hospital con ese ID'
+            });
+        }
 
-        // await Usuario.findByIdAndDelete(uid);
+        await Hospital.findByIdAndDelete(hospitalId);
 
         res.json({
             ok: true,
-            msg: 'Usuario eliminado'
+            msg: 'Hospital eliminado'
         })
     }
     catch (error) {

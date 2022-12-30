@@ -26,16 +26,14 @@ router.post('/',
 
 router.put('/:id',
     [
-        // validarJWT,
-        // check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-        // check('email', 'El email es obligatorio').isEmail(),
-        // check('password', 'El rol es obligatorio').not().isEmpty(),
-        // validarCampos
+        validarJWT,
+        check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+        validarCampos
     ],
     actualizarHospital);
 
 router.delete('/:id',
-    // validarJWT,
+    validarJWT,
     eliminarHospital);
 
 

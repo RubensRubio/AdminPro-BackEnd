@@ -73,8 +73,8 @@ const loginGoogle = async (req, res = response) => {
         //Guardar usuario
         await usuario.save();
 
-          //Generar JWT
-          const token = await generarJWT(usuario.id);
+        //Generar JWT
+        const token = await generarJWT(usuario.id);
 
         return res.json({
             ok: true,
@@ -91,7 +91,21 @@ const loginGoogle = async (req, res = response) => {
     }
 }
 
+const renewToken = async (req, res = response) => {
+
+    const uid = req.uid;
+    //Generar JWT
+    const token = await generarJWT(uid);
+
+    res.json({
+        ok: true,
+        token
+    })
+
+}
+
 module.exports = {
     login,
-    loginGoogle
+    loginGoogle,
+    renewToken
 }
