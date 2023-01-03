@@ -2,7 +2,7 @@ const { response } = require('express');
 const { actualizarImagen } = require('../helpers/actualizar-imagen');
 const path = require('path')
 const fs = require('fs')
-
+const { v4: uuidv4 } = require('uuid');
 
 
 const uploadDocument = async (req, res = response) => {
@@ -81,7 +81,7 @@ const returnImage = (req, res = response) => {
     let pathImg = path.join(__dirname, `../uploads/${tipo}/${img}`);
 
     //imagen por defecto
-    if(!fs.existsSync(pathImg)){
+    if (!fs.existsSync(pathImg)) {
         pathImg = path.join(__dirname, `../uploads/no-img.jpg`);
     }
 
